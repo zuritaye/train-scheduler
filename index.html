@@ -1,159 +1,254 @@
 <!DOCTYPE html>
-
 <html lang="en-us">
 
 <head>
-
   <meta charset="UTF-8">
-  <title>Sign-Up Today!</title>
-
+  <title>Train Schedule</title>
   <!-- Bootstrap -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-
   <!-- LINK TO FIREBASE GOES HERE -->
-  <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase.js"></script>
 
 </head>
 
-<body>
+<div class="container">
+  <br>
+  <!-- Jumbotron -->
+  <div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <h1 class="font-weight-bold" "display-4">Your destination awaits.</h1>
+      <p class="lead"></p>
+    </div>
+  </div>
 
-  <div class="container">
-
-    <br>
-
-    <!-- Jumbotron -->
-    <div class="jumbotron">
-      <h1 class="text-center">Sign-Up Today!</h1>
+  <body>
+    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img class="d-block w-100" src="train1.png" alt="First slide">
+        </div>
+        <div class="carousel-item">
+          <img class="d-block w-100" src="train2.png" alt="Second slide">
+        </div>
+        <div class="carousel-item">
+          <img class="d-block w-100" src="train3.png" alt="Third slide">
+        </div>
+      </div>
+      <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
     </div>
 
     <div class="row">
-
-      <!-- Sign-Up Card-->
-      <div class="col-lg-6">
+      <!-- Current Train Schedule -->
+      <div class="col-lg-12">
         <div class="card card-default">
           <div class="card-heading">
-            <h3 class="card-title">New Member Sign-Up</h3>
+            <h4 class="font-weight-bold" "card-title">Current Train Schedule</h4>
           </div>
           <div class="card-body">
-
-            <!-- Sign-up Form (note the various input "types")-->
-
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Train Name</th>
+                  <th scope="col">Destination</th>
+                  <th scope="col">Frequency (min)</th>
+                  <th scope="col">Next Arrival</th>
+                  <th scope="col">Minutes Away</th>
+                </tr>
+              </thead>
+              <tbody id="train-schedule">
+                <tr>
+                  <th scope="row">Amtrak</th>
+                  <td>Town</td>
+                  <td>How Many Times</td>
+                  <td>Estimated Arrival Time</td>
+                  <td>Arrival Time</td>
+                </tr>
+                <!-- <tr>
+                  <th scope="row">Amtrak</th>
+                  <td>Town</td>
+                  <td>How Many Times</td>
+                  <td>Estimated Arrival Time</td>
+                  <td>Arrival Time</td>
+                </tr>
+                <tr>
+                  <th scope="row">Amtrak</th>
+                  <td>Town</td>
+                  <td>How Many Times</td>
+                  <td>Estimated Arrival Time</td>
+                  <td>Arrival Time</td>
+                </tr>
+                <tr>
+                  <th scope="row">Amtrak</th>
+                  <td>Town</td>
+                  <td>How Many Times</td>
+                  <td>Estimated Arrival Time</td>
+                  <td>Arrival Time</td>
+                </tr>
+                <tr>
+                  <th scope="row">Amtrak</th>
+                  <td>Town</td>
+                  <td>How Many Times</td>
+                  <td>Estimated Arrival Time</td>
+                  <td>Arrival Time</td>
+                </tr> -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!-- Add Train -->
+      <div class="col-lg-12">
+        <div class="card card-default">
+          <div class="card-heading">
+            <h4 class="font-weight-bold" "card-title">Add Train</h4>
+          </div>
+          <div class="card-body">
+            <!-- Train Information -->
             <form role="form">
               <div class="form-group row">
-                <label for="name-input">Name:</label>
+                <label for="name-input">Train Name:</label>
                 <input class="form-control" id="name-input" type="text">
               </div>
               <div class="form-group row">
-                <label for="email-input">Email:</label>
-                <input class="form-control" id="email-input" type="email">
+                <label for="destination-input">Destination</label>
+                <input class="form-control" id="destination-input" type="text">
               </div>
               <div class="form-group row">
-                <label for="age-input">Age:</label>
-                <input class="form-control" id="age-input" type="number">
+                <label for="time-input">First Train Time (HH:MM)</label>
+                <input class="form-control" id="time-input" type="number">
               </div>
               <div class="form-group row">
-                <label for="comment-input">How did you hear about us?</label>
-                <textarea class="form-control" rows="5" id="comment-input"></textarea>
+                <label for="frequency-input">Frequency (min)</label>
+                <input class="form-control" id="frequency-input" type="number">
               </div>
-              <button class="btn btn-default" id="add-user" type="submit">Submit</button>
+              <button id="add-train" class="btn btn-primary" type="submit">Submit</button>
             </form>
-
-          </div>
-
-        </div>
-
-      </div>
-
-      <!-- Most Recent Member card -->
-      <div class="col-lg-6">
-        <div class="card card-default">
-          <div class="card-heading">
-            <h3 class="card-title">Most Recent Member</h3>
-          </div>
-          <div class="card-body" id="recent-member">
-            <h2 id="name-display"></h2>
-            <h4 id="email-display"></h4>
-            <h4 id="age-display"></h4>
-            <p id="comment-display"></p>
           </div>
         </div>
       </div>
+      <!--Footer-->
+      <div class="col-lg-12">
+        <div class="card text-center">
+          <div class="card-header">
+            AMTRAK
+          </div>
+          <div class="card-body">
+            <blockquote class="blockquote mb-0">
+              <p>©2018 National Railroad Passenger Corporation</p>
+              <footer class="blockquote-footer">WELCOME &
+                <cite title="Source Title">All aboard!</cite>
+              </footer>
+            </blockquote>
+          </div>
+        </div>
+      </div>
+      <!-- jQuery -->
+      <script src="moment.js"></script>
+      <script src="https://code.jquery.com/jquery.js"></script>
+      <!-- Script -->
+      <script>
+        // ========================================== START CODING BELOW!!
+        // Initialize Firebase
+        var config = {
+          apiKey: "AIzaSyDM1hqtv_4Vfwt5s7fQ3c45GsD5vHIsHdw",
+          authDomain: "train-75a91.firebaseapp.com",
+          databaseURL: "https://train-75a91.firebaseio.com",
+          projectId: "train-75a91",
+          storageBucket: "train-75a91.appspot.com",
+          messagingSenderId: "101855460418"
+        };
+        firebase.initializeApp(config);
 
-    </div>
+        // Create a variable to reference the database.
+        var database = firebase.database();
 
-  </div>
+        // Initial Values
+        var name = "name-input";
+        var destination = "destination-input";
+        var time = "time-input";
+        var frequency = "frequency-input";
 
-  <!-- jQuery -->
-  <script src="https://code.jquery.com/jquery.js"></script>
+        // Capture Button Click
+        $("#add-train").on("click", function (event) {
+          event.preventDefault();
 
-  <!-- Script -->
-  <script>
-    // ========================================== START CODING BELOW!!
+          // Grabbed values from text boxes
+          name = $("#name-input").val().trim();
+          destination = $("#destination-input").val().trim();
+          time = $("#time-input").val().trim();
+          frequency = $("#frequency-input").val().trim();
+          console.log(name);
 
-    // Initialize Firebase
-    var config = {
-      apiKey: "AIzaSyCanlYIc7n-Wel8wDeaMxMzYtViVVCOwpI",
-      authDomain: "recent-user-with-push.firebaseapp.com",
-      databaseURL: "https://recent-user-with-push.firebaseio.com",
-      storageBucket: "recent-user-with-push.appspot.com",
-      messagingSenderId: "208476116054"
-    };
+          // Code for handling the push
+          database.ref().push({
+            name: name,
+            destination: destination,
+            time: time,
+            frequency: frequency,
+            dateAdded: firebase.database.ServerValue.TIMESTAMP
+          });
 
-    firebase.initializeApp(config);
+        });
 
-    // Create a variable to reference the database.
-    var database = firebase.database();
+        // Firebase watcher .on("child_added "
+        database.ref().on("child_added", function (snapshot) {
+          // storing the snapshot.val() in a variable for convenience
+          var sv = snapshot.val();
 
-    // Initial Values
-    var name = "";
-    var email = "";
-    var age = 0;
-    var comment = "";
+          // Console.loging the last user's data
+          console.log(sv.name);
+          console.log(sv.destination);
+          console.log(sv.time);
+          console.log(sv.frequency);
 
-    // Capture Button Click
-    $("#add-user").on("click", function(event) {
-      event.preventDefault();
+          // Change the HTML to reflect
+          $("#name-display ").text(sv.name);
+          $("#destination-display ").text(sv.destination);
+          $("#time-display ").text(sv.time);
+          $("#frequency-display ").text(sv.frequency);
 
-      // Grabbed values from text boxes
-      name = $("#name-input").val().trim();
-      email = $("#email-input").val().trim();
-      age = $("#age-input").val().trim();
-      comment = $("#comment-input").val().trim();
+          // <tr>
+          //   <th scope="row">Amtrak</th>
+          //   <td>Town</td>
+          //   <td>How Many Times</td>
+          //   <td>Estimated Arrival Time</td>
+          //   <td>Arrival Time</td>
+          // </tr>
+          var tableRow = $("<tr>");
+          var name = $("<th>").attr("scope", "row").text(sv.name);
+          tableRow.append(name);
+          $("#train-schedule").append(tableRow);
 
-      // Code for handling the push
-      database.ref().push({
-        name: name,
-        email: email,
-        age: age,
-        comment: comment,
-        dateAdded: firebase.database.ServerValue.TIMESTAMP
-      });
+          var tableDataDestination = $("<td>");
+          var destination = tableDataDestination.attr("scope", "row").text(sv.destination);
+          tableDataDestination.append(destination);
+          tableRow.append(tableDataDestination);
 
-    });
+          var tableDataFrequency = $("<td>");
+          var frequency = tableDataFrequency.attr("scope", "row").text(sv.frequency);
+          tableDataFrequency.append(frequency);
+          tableRow.append(tableDataFrequency);
 
-    // Firebase watcher .on("child_added"
-    database.ref().on("child_added", function(snapshot) {
-      // storing the snapshot.val() in a variable for convenience
-      var sv = snapshot.val();
+          var now = moment();
+          console.log(moment().format('HH:mm'))
+          moment().format('hh:mm');
 
-      // Console.loging the last user's data
-      console.log(sv.name);
-      console.log(sv.email);
-      console.log(sv.age);
-      console.log(sv.comment);
+          var firstTrain = sv.time;
+          console.log(firstTrain)
 
-      // Change the HTML to reflect
-      $("#name-display").text(sv.name);
-      $("#email-display").text(sv.email);
-      $("#age-display").text(sv.age);
-      $("#comment-display").text(sv.comment);
+          // Handle the errors
+        }, function (errorObject) {
+          console.log("Errors handled: " + errorObject.code);
+        });
+      </script>
 
-      // Handle the errors
-    }, function(errorObject) {
-      console.log("Errors handled: " + errorObject.code);
-    });
-  </script>
-
-</body>
+  </body>
 
 </html>
